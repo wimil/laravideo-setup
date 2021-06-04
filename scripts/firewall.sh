@@ -1,7 +1,7 @@
 if [[ $OS == 'ubuntu' ]]; then
     ufw allow OpenSSH
     ufw allow 'Nginx Full'
-    ufw enable
+    ufw --force enable
 else
     yum install firewalld -y
     systemctl start firewalld

@@ -9,7 +9,7 @@ composer install
 php artisan key:generate
 php artisan storage:link
 
-cd ~/laravideo-install
+cd ~/laravideo-setup
 
 chown -R www:www $server_root
 
