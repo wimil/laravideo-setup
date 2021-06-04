@@ -11,4 +11,6 @@ systemctl start nginx
 
 sed -i "s/user $default_user_nginx/user www/g" /etc/nginx/nginx.conf
 
+service nginx restart
+
 message "success" "Nginx Instalado"
