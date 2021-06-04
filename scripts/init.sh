@@ -2,6 +2,8 @@
 source ./scripts/helpers.sh
 source ./scripts/prompt.sh
 
+echo $OS
+
 if [[ $SO == 'ubuntu' ]]; then
     apt update -y
     apt upgrade -y

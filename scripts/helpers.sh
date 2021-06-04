@@ -45,5 +45,3 @@ function message() {
 }
 
 get_os_info
-
-echo $OS
