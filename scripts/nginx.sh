@@ -1,4 +1,4 @@
-if [[ $SO == 'ubuntu' ]]; then
+if [[ $OS == 'ubuntu' ]]; then
     apt install nginx nginx-extras -y
     default_user_nginx='www-data'
 else

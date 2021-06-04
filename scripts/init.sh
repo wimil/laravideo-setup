@@ -2,9 +2,7 @@
 source ./scripts/helpers.sh
 source ./scripts/prompt.sh
 
-echo $OS
-
-if [[ $SO == 'ubuntu' ]]; then
+if [[ $OS == 'ubuntu' ]]; then
     apt update -y
     apt upgrade -y
     apt install unzip -y
