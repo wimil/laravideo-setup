@@ -41,5 +41,5 @@ elif [[ $install_type == 'storage' ]]; then
     message "success" "Tipo storage Configurado!!"
 fi
 
-systemctl restart supervisord
+#systemctl restart supervisord
 
