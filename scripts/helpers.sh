@@ -21,8 +21,10 @@ function get_os_info() {
         VER=$(cat /etc/debian_version)
     elif [ -f /etc/SuSe-release ]; then
         # Older SuSE/etc.
+        echo ""
     elif [ -f /etc/redhat-release ]; then
         # Older Red Hat, CentOS, etc.
+        echo ""
     else
         # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
         OS=$(uname -s)
@@ -44,5 +46,4 @@ function message() {
 
 get_os_info
 
-
-echo $OS;
+echo $OS
