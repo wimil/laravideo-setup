@@ -1,4 +1,4 @@
-mv ./template/letsencrypt-renew /etc/cron.daily/letsencrypt-renew
+mv ./templates/letsencrypt-renew /etc/cron.daily/letsencrypt-renew
 chmod +x /etc/cron.daily/letsencrypt-renew
 crontab -l | {
     cat
