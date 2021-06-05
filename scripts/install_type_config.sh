@@ -1,3 +1,9 @@
+if [[ $OS == 'ubuntu' ]]; then
+    supervisor_path=/etc/supervisor/conf.d
+else
+    supervisor_path=/etc/supervisord.d
+fi
+
 if [[ $install_type == 'encoder' ]]; then
 
     # Upload File Size
@@ -13,33 +19,41 @@ if [[ $install_type == 'encoder' ]]; then
     chmod +x /usr/bin/ffmpeg
     chmod +x /usr/bin/ffprobe
 
-    if [[ $OS == 'centos' ]]; then
+    if [[ $OS == 'ubuntu' ]]; then
+        # Instalamos paquetes adicionales para ffmpeg
+        apt install libass9 libvorbisenc2 fdkaac libmp3lame0 libopus0 libx264-155 libx265-179 libvpx6 -y
+    else
         chcon -t execmem_exec_t '/usr/bin/ffmpeg'
         chcon -t execmem_exec_t '/usr/bin/ffprobe'
     fi
 
     # Configurando el supervisor
-    touch /etc/supervisord.d/encoder.ini
-    cat ./templates/supervisor/encoder.ini >/etc/supervisord.d/encoder.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" /etc/supervisord.d/encoder.ini
+    touch $supervisor_path/encoder.ini
+    cat ./templates/supervisor/encoder.ini >$supervisor_path/encoder.ini
+    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/encoder.ini
 
-    touch /etc/supervisord.d/storing.ini
-    cat ./templates/supervisor/storing.ini >/etc/supervisord.d/storing.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" /etc/supervisord.d/storing.ini
+    touch $supervisor_path/storing.ini
+    cat ./templates/supervisor/storing.ini >$supervisor_path/storing.ini
+    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/storing.ini
 
-    touch /etc/supervisord.d/backup.ini
-    cat ./templates/supervisor/backup.ini >/etc/supervisord.d/backup.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" /etc/supervisord.d/backup.ini
+    touch $supervisor_path/backup.ini
+    cat ./templates/supervisor/backup.ini >$supervisor_path/backup.ini
+    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/backup.ini
 
-    touch /etc/supervisord.d/download.ini
-    cat ./templates/supervisor/download.ini >/etc/supervisord.d/download.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" /etc/supervisord.d/download.ini
+    touch $supervisor_path/download.ini
+    cat ./templates/supervisor/download.ini >$supervisor_path/download.ini
+    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/download.ini
 
     message "success" "Tipo encoder Configurado!!"
 
 elif [[ $install_type == 'storage' ]]; then
+
+    touch $supervisor_path/move.ini
+    cat ./templates/supervisor/move.ini >$supervisor_path/move.ini
+    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/move.ini
+
     message "success" "Tipo storage Configurado!!"
 fi
 
-#systemctl restart supervisord
-
+supervisorctl reread
+supervisorctl update
