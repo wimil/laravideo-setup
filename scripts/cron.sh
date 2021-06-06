@@ -1,4 +1,4 @@
-if [[$OS != 'ubuntu']]; then
+if [[ $OS != 'ubuntu' ]]; then
     mv ./templates/letsencrypt-renew /etc/cron.daily/letsencrypt-renew
     chmod +x /etc/cron.daily/letsencrypt-renew
     crontab -l | {
