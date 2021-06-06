@@ -22,6 +22,8 @@ if [[ $OS == 'ubuntu' ]]; then
     ln -s /etc/pure-ftpd/conf/PureDB /etc/pure-ftpd/auth/PureDB
     echo -n "no" >/etc/pure-ftpd/conf/PAMAuthentication
     echo -n "14" >/etc/pure-ftpd/conf/MinUID
+    echo -n "39000 40000" >/etc/pure-ftpd/conf/PassivePortRange
+    echo 'yes' > /etc/pure-ftpd/conf/DontResolve
 
     ufw allow 20/tcp
     ufw allow 21/tcp
