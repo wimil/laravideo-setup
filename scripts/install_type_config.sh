@@ -1,3 +1,10 @@
+function add_supervisor_proccess() {
+    local name=$1
+    touch $supervisor_path/$name.ini
+    cat ./templates/supervisor/$name.ini >$supervisor_path/$name.ini
+    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/$name.ini
+}
+
 if [[ $OS == 'ubuntu' ]]; then
     supervisor_path=/etc/supervisor/conf.d
 else
@@ -27,30 +34,19 @@ if [[ $install_type == 'encoder' ]]; then
         chcon -t execmem_exec_t '/usr/bin/ffprobe'
     fi
 
-    # Configurando el supervisor
-    touch $supervisor_path/encoder.ini
-    cat ./templates/supervisor/encoder.ini >$supervisor_path/encoder.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/encoder.ini
+    add_supervisor_proccess "encoder"
 
-    touch $supervisor_path/storing.ini
-    cat ./templates/supervisor/storing.ini >$supervisor_path/storing.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/storing.ini
+    add_supervisor_proccess "storing"
 
-    touch $supervisor_path/backup.ini
-    cat ./templates/supervisor/backup.ini >$supervisor_path/backup.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/backup.ini
+    add_supervisor_proccess "backup"
 
-    touch $supervisor_path/download.ini
-    cat ./templates/supervisor/download.ini >$supervisor_path/download.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/download.ini
+    add_supervisor_proccess "download"
 
     message "success" "Tipo encoder Configurado!!"
 
 elif [[ $install_type == 'storage' ]]; then
 
-    touch $supervisor_path/move.ini
-    cat ./templates/supervisor/move.ini >$supervisor_path/move.ini
-    sed -i "s/{server_name}/$server_name/g;s/{server_id}/$server_id/g" $supervisor_path/move.ini
+    add_supervisor_proccess "move"
 
     message "success" "Tipo storage Configurado!!"
 fi
