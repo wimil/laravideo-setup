@@ -17,6 +17,7 @@ if [[ $install_type == 'encoder' ]]; then
     sed '/http {/a \    client_max_body_size 6500M;' -i /etc/nginx/nginx.conf
     sed -i 's,^upload_max_filesize =.*$,upload_max_filesize = 6000M,' $php_ini_path
     sed -i 's,^post_max_size =.*$,post_max_size = 6500M,' $php_ini_path
+    sed -i 's,^max_execution_time =.*$,max_execution_time = 0,' $php_ini_path
     systemctl restart $php_service_name
     systemctl restart nginx
 

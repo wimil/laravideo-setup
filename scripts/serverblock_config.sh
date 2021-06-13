@@ -1,5 +1,8 @@
 if [[ $install_type == 'storage' ]]; then
     sb_template=./templates/$OS/server_block_storage.conf
+
+elif [[ $install_type == 'encoder' ]]; then
+    sb_template=./templates/$OS/server_block_encoder.conf
 else
     sb_template=./templates/$OS/server_block.conf
 fi
